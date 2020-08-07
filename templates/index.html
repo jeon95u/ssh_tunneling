@@ -1,0 +1,90 @@
+<html>
+	<head>
+		<title>Tunneling Manger</title>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+		<style type="text/css">th,td{text-align: center;}</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row center">
+				<a href="/"><h5 class="teal-text lighten-2">Tunneling Manger</h5></a>
+				<p class="caption">server: aws.ko.jeong.su</p>
+			</div>
+			<div class="row">
+				<form method="POST">
+					<div class="col s12 push-s3" id="event">
+						<div class="input-field col s1">
+							<input id="ex_port" name="ex_port" type="text" class="">
+							<label for="ex_port">Ext Port</label>
+						</div>
+						<div class="input-field col s2">
+							<input id="in_ip" name="in_ip" type="text" class="validate">
+							<label for="in_ip">Internal IP</label>
+						</div>
+						<div class="input-field col s1">
+							<input id="in_port" name="in_port" type="text" class="validate">
+							<label for="in_port">Int Port</label>
+						</div>
+						<div class="input-field col s2">
+							<input id="memo" name="memo" type="text" class="validate">
+							<label for="memo">Memo</label>
+						</div>
+					</div>
+					<div class="row center">
+						<div class="col s6 push-s3">
+							<table>
+								<thead>
+									<tr><th id="ext"></th><th><i class="material-icons" style="vertical-align: bottom; font-size: 20px !important;">arrow_forward</i></th><th id="int"></th><th id="m"></th></tr>
+								</thead>
+<!--
+								<thead> 
+									<tr><th id="ex_i">aws.ko.jeong.su</th><th>:</th><th id="ex_p"></th><th><i class="material-icons" style="vertical-align: bottom; font-size: 20px !important;">arrow_forward</i></th><th id="in_i"></th><th>:</th><th id="in_p"></th></tr>
+								</thead> 
+-->
+							</table>
+						</div>
+					</div>
+					<div class="row center">
+						<div class="col s4 push-s4">
+							<button class="btn-small waves-effect waves-light" type="submit">add tunnel
+							 </button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="row">
+				<div class="col s6 push-s3">
+					<table>
+						<thead>
+							<tr><th>External</th><th></th><th>Internal</th><th>Memo</th><th>Delete</th></tr>
+						</thead>
+						<tbody>
+							{% for row in data %}
+							<tr>
+								<td><span>{{ 'aws.ko.jeong.su:' + row }}</span></td>
+								<td><i class="material-icons">arrow_forward</i></td>
+								<td><span>{{ data[row]['in_i'] + ':' + data[row]['in_p'] }}</span></td>
+								<td><span>{{ data[row]['memo'] }}</span></td>
+								<td><a class="teal-text lighten-2" href='/d/{{ row }}'><i class="material-icons">delete</i></a></td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script>
+		$("#event").keyup(function(){
+			if($("#ex_port").val()) $("#ext").text("aws.ko.jeong.su:" + $("#ex_port").val());
+			if($("#in_ip").val() && $("#in_port").val()) $("#int").text($("#in_ip").val() + ":" + $("#in_port").val());
+			if($("#memo").val()) $("#m").text('('+$("#memo").val()+')');
+			// if($("#ex_port").val()) $("#ex_p").text($("#ex_port").val());
+			// if($("#in_ip").val()) $("#in_i").text($("#in_ip").val());
+			// if($("#in_port").val()) $("#in_p").text($("#in_port").val());
+		});
+	</script>
+	</body>
+</html>
